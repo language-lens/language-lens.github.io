@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Language Lens Privacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one reading column; a "where your data goes" map up top, then the full policy as numbered clauses */
+:root {
+  --bg: #f6f4fa;
+  --surface: #ffffff;
+  --ink: #16131f;
+  --muted: #5d5872;
+  --line: rgba(22, 19, 31, 0.10);
+  --indigo: #5b4be0;
+  --mint: #127f66;
+  --ember: #c9512f;
+  --tint-indigo: rgba(91, 75, 224, 0.08);
+  --tint-mint: rgba(18, 127, 102, 0.09);
+  --tint-ember: rgba(201, 81, 47, 0.09);
+  --display: "Readex Pro", "Geeza Pro", "Segoe UI", system-ui, sans-serif;
+  --body: "Readex Pro", "Geeza Pro", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0b14; --surface: #17141f; --ink: #ece9f6; --muted: #a49fba; --line: rgba(255, 255, 255, 0.09);
+    --indigo: #a99ffb; --mint: #5ee6c8; --ember: #ff8a6b;
+    --tint-indigo: rgba(123, 108, 246, 0.14); --tint-mint: rgba(94, 230, 200, 0.10); --tint-ember: rgba(255, 122, 89, 0.11);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0b14; --surface: #17141f; --ink: #ece9f6; --muted: #a49fba; --line: rgba(255, 255, 255, 0.09);
+  --indigo: #a99ffb; --mint: #5ee6c8; --ember: #ff8a6b;
+  --tint-indigo: rgba(123, 108, 246, 0.14); --tint-mint: rgba(94, 230, 200, 0.10); --tint-ember: rgba(255, 122, 89, 0.11);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-weight: 300; font-size: 16px; line-height: 1.75;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 15px; }
+.mark { width: 26px; height: 18px; border-radius: 7px; border: 1.5px solid var(--indigo); position: relative; }
+.mark::after { content: ""; position: absolute; inset: 3px; border-radius: 4px; background: var(--tint-indigo); }
+.langs { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.langs button {
+  font: 500 13px/1 var(--body); color: var(--muted); background: none; border: 0; cursor: pointer;
+  padding: 8px 14px; border-radius: 999px;
+}
+.langs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.langs button:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 6vw, 42px); line-height: 1.2; margin: 18px 0 10px; text-wrap: balance; }
+.lede { color: var(--muted); font-size: 17px; margin: 0 0 6px; max-width: 60ch; }
+.meta { font-size: 13px; color: var(--muted); margin: 0; }
+
+.map { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 30px 0 8px; }
+.cell { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; min-width: 0; }
+.cell h3 { margin: 0 0 6px; font-family: var(--display); font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.cell p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.cell.local .dot { background: var(--mint); box-shadow: 0 0 0 4px var(--tint-mint); }
+.cell.opt .dot { background: var(--ember); box-shadow: 0 0 0 4px var(--tint-ember); }
+.cell.never .dot { background: var(--indigo); box-shadow: 0 0 0 4px var(--tint-indigo); }
+
+section { border-top: 1px solid var(--line); padding-top: 26px; margin-top: 30px; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 20px; margin: 0 0 10px; display: flex; gap: 12px; align-items: baseline; text-wrap: balance; }
+h2 .n { font-family: var(--mono); font-size: 13px; color: var(--indigo); font-weight: 400; }
+p, li { max-width: 65ch; }
+ul { padding-inline-start: 22px; margin: 8px 0; }
+li { margin: 4px 0; }
+strong { font-weight: 500; }
+code { font-family: var(--mono); font-size: 13px; background: var(--tint-indigo); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; direction: ltr; unicode-bidi: isolate; }
+a { color: var(--indigo); text-underline-offset: 3px; }
+.note { background: var(--tint-ember); border-radius: 12px; padding: 12px 16px; margin: 14px 0 4px; font-size: 15px; }
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 10px; }
+.email { font-family: var(--mono); font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; user-select: all; direction: ltr; }
+.copy { font: 500 13px/1 var(--body); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+.copy:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+[lang="ar"] { direction: rtl; }
+[lang="en"] { direction: ltr; }
+@media (max-width: 620px) { .map { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><span id="brandName">عدسة اللغات</span></div>
+    <div class="langs" role="group" aria-label="Language">
+      <button id="btn-ar" type="button" aria-pressed="true">العربية</button>
+      <button id="btn-en" type="button" aria-pressed="false">English</button>
+    </div>
+  </header>
+
+  <!-- ========================= العربية ========================= -->
+  <article id="ar" lang="ar">
+    <h1>سياسة الخصوصية</h1>
+    <p class="lede">عدسة اللغات تقرأ النص الظاهر تحت العدسة على شاشتك وتكتب ترجمته فوقه. هذه الصفحة توضح ما الذي يبقى على جهازك، وما الذي يخرج منه ومتى.</p>
+    <p class="meta">تاريخ السريان: ٢٠ أكتوبر ٢٠٢٦</p>
+
+    <div class="map" aria-label="ملخص">
+      <div class="cell local"><h3><span class="dot"></span>يبقى على جهازك</h3><p>صور الشاشة، والترجمة العادية، وسجل الترجمات، ومفاتيحك، وإعداداتك.</p></div>
+      <div class="cell opt"><h3><span class="dot"></span>يخرج فقط إذا فعّلته</h3><p>نص العدسة يُرسَل إلى الخدمة التي تختارها عند تشغيل الترجمة الاحترافية بمفتاحك.</p></div>
+      <div class="cell never"><h3><span class="dot"></span>لا يحدث أبدًا</h3><p>لا حسابات ولا إعلانات ولا تحليلات ولا تتبّع، ولا خادم خاص بنا يستقبل بياناتك.</p></div>
+    </div>
+
+    <section>
+      <h2><span class="n">١</span>ما الذي يراه التطبيق</h2>
+      <p>يحتاج التطبيق إذن <strong>«تسجيل الشاشة»</strong> في macOS ليقرأ الجزء الموجود تحت العدسة فقط. تُقرأ الصورة على جهازك باستخدام أدوات Apple للتعرّف على النص، ثم تُحذف من الذاكرة. لا يحفظ التطبيق صور الشاشة، ولا يرسلها إلى أي جهة، في أي وضع.</p>
+      <p>يمكنك سحب الإذن في أي وقت من «إعدادات النظام» ← «الخصوصية والأمان» ← «تسجيل الشاشة وصوت النظام».</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٢</span>الترجمة العادية</h2>
+      <p>تتم الترجمة العادية بالكامل على جهازك عبر خدمة الترجمة المدمجة في macOS. يُنزّل النظام حزم اللغات من Apple مرة واحدة، وبعدها تعمل الترجمة دون اتصال بالإنترنت. معاني الكلمات التي تظهر عند النقر على كلمة تأتي من القاموس المدمج في الماك.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٣</span>الترجمة الاحترافية (اختيارية)</h2>
+      <p>الترجمة الاحترافية مطفأة افتراضيًا. لا تعمل إلا إذا أضفت مفتاحك الخاص من إحدى هذه الخدمات وشغّلتها بنفسك:</p>
+      <ul>
+        <li><strong>Claude</strong> من Anthropic</li>
+        <li><strong>ChatGPT</strong> من OpenAI</li>
+        <li><strong>Gemini</strong> من Google</li>
+      </ul>
+      <p>عند تشغيلها يُرسَل <strong>النص</strong> الذي قُرئ تحت العدسة، مع تعليمات الترجمة واسم لغة الترجمة، مباشرةً من جهازك إلى الخدمة التي اخترتها. لا تُرسَل صور الشاشة. لا يمر الطلب بأي خادم لنا، ولا نطّلع عليه.</p>
+      <p>في «الترجمة السريعة» للأفلام، ومع تشغيل الترجمة الاحترافية، تُرسَل أيضًا آخر الجمل المترجمة من الفيلم نفسه حتى تأتي الترجمة متّسقة مع السياق. تُحفظ هذه الجمل في ذاكرة التطبيق فقط، وتُمسح عند إيقاف الترجمة السريعة.</p>
+      <p>عند حفظ مفتاح جديد يطلب التطبيق من الخدمة قائمة النماذج المتاحة، للتحقق من المفتاح واختيار نموذج مناسب.</p>
+      <p>تتعامل كل خدمة مع ما يصلها وفق شروطها وسياسة خصوصيتها:
+        <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic</a>،
+        <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">OpenAI</a>،
+        <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Google Gemini API</a>.</p>
+      <p class="note">تنبيه بخصوص Gemini المجاني: تذكر Google في شروطها أنها قد تستخدم المحتوى المرسَل عبر الخدمات المجانية لتحسين منتجاتها، وقد يراجعه أشخاص. تجنّب تمرير العدسة على نصوص حساسة مع المفتاح المجاني، أو استخدم حسابًا مدفوعًا.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٤</span>ما يُحفظ على جهازك</h2>
+      <ul>
+        <li><strong>مفاتيح الخدمات</strong> في «سلسلة المفاتيح» (Keychain) في macOS، ولا تغادر جهازك إلا مع طلبات الخدمة نفسها.</li>
+        <li><strong>سجل الترجمات</strong>: آخر ١٠٠ ترجمة (النص الأصلي وترجمته). يمكنك إيقافه أو مسحه من التطبيق. جمل الأفلام لا تُحفظ إلا إذا فعّلت ذلك. مكانه: <code>~/Library/Application Support/AdasaLens/history.json</code></li>
+        <li><strong>الإعدادات</strong> وعدّاد الاستهلاك التقريبي، ويُحسب العدّاد على جهازك.</li>
+        <li><strong>سجل تشخيص تقني</strong> فيه أحداث مثل تشغيل التطبيق وجاهزية اللغات، ولا يُكتب فيه أي نص من الشاشة ولا أي ترجمة، وحجمه محدود. مكانه: <code>~/Library/Logs/LanguageLens.log</code></li>
+      </ul>
+      <p>حذف التطبيق مع هذه الملفات يزيل كل ما حفظه.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٥</span>ما لا نفعله</h2>
+      <p>لا نطلب إنشاء حساب، ولا نجمع بيانات استخدام أو تحليلات، ولا نعرض إعلانات، ولا نتتبّعك عبر التطبيقات أو المواقع، ولا نبيع أي بيانات أو نشاركها. ليس لدينا خادم يستقبل بيانات من التطبيق.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٦</span>الأطفال</h2>
+      <p>التطبيق موجّه لعامة المستخدمين، ولا يجمع أي معلومات شخصية من أي مستخدم، بمن فيهم الأطفال.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٧</span>تغييرات السياسة</h2>
+      <p>إذا تغيّر ما يفعله التطبيق بالبيانات، نحدّث هذه الصفحة ونغيّر تاريخ السريان أعلاها.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٨</span>التواصل</h2>
+      <p>لأي سؤال عن الخصوصية راسلنا على:</p>
+      <div class="contact"><span class="email" data-email>[البريد الإلكتروني]</span><button class="copy" type="button" data-copy>نسخ</button></div>
+    </section>
+  </article>
+
+  <!-- ========================= English ========================= -->
+  <article id="en" lang="en" hidden>
+    <h1>Privacy Policy</h1>
+    <p class="lede">Language Lens reads the text under its lens on your screen and writes the translation on top of it. This page explains what stays on your Mac, and what leaves it and when.</p>
+    <p class="meta">Effective date: October 20, 2026</p>
+
+    <div class="map" aria-label="Summary">
+      <div class="cell local"><h3><span class="dot"></span>Stays on your Mac</h3><p>Screen images, standard translation, translation history, your keys and your settings.</p></div>
+      <div class="cell opt"><h3><span class="dot"></span>Leaves only if you turn it on</h3><p>Lens text goes to the service you choose when Pro translation is on with your own key.</p></div>
+      <div class="cell never"><h3><span class="dot"></span>Never happens</h3><p>No accounts, ads, analytics or tracking, and no server of ours that receives your data.</p></div>
+    </div>
+
+    <section>
+      <h2><span class="n">1</span>What the app sees</h2>
+      <p>The app needs macOS <strong>Screen Recording</strong> permission to read only the area under the lens. The image is read on your Mac with Apple's text recognition, then dropped from memory. The app never saves screen images and never sends them anywhere, in any mode.</p>
+      <p>You can revoke the permission at any time in System Settings → Privacy &amp; Security → Screen &amp; System Audio Recording.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>Standard translation</h2>
+      <p>Standard translation runs entirely on your Mac using the translation service built into macOS. The system downloads language packs from Apple once, and after that translation works offline. Word definitions shown when you click a word come from the Mac's built-in dictionary.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>Pro translation (optional)</h2>
+      <p>Pro translation is off by default. It only works after you add your own key from one of these services and turn it on yourself:</p>
+      <ul>
+        <li><strong>Claude</strong> by Anthropic</li>
+        <li><strong>ChatGPT</strong> by OpenAI</li>
+        <li><strong>Gemini</strong> by Google</li>
+      </ul>
+      <p>When it is on, the <strong>text</strong> recognized under the lens, along with translation instructions and the target language, is sent directly from your Mac to the service you chose. Screen images are not sent. Requests do not pass through any server of ours, and we never see them.</p>
+      <p>In Quick Translation for movies, with Pro translation on, the most recent translated lines of the same movie are also sent so the translation stays consistent with the context. These lines are kept only in the app's memory and are erased when you stop Quick Translation.</p>
+      <p>When you save a new key, the app asks the service for its list of available models, to check the key and pick a suitable model.</p>
+      <p>Each service handles what it receives under its own terms and privacy policy:
+        <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic</a>,
+        <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">OpenAI</a>,
+        <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Google Gemini API</a>.</p>
+      <p class="note">About free Gemini keys: Google's terms say content sent through its unpaid services may be used to improve Google products and may be read by human reviewers. Avoid moving the lens over sensitive text with a free key, or use a paid account.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>What is stored on your Mac</h2>
+      <ul>
+        <li><strong>Service keys</strong> in the macOS Keychain. They leave your Mac only with requests to that service.</li>
+        <li><strong>Translation history</strong>: the last 100 translations (original text and translation). You can turn it off or clear it in the app. Movie lines are saved only if you enable that. Location: <code>~/Library/Application Support/AdasaLens/history.json</code></li>
+        <li><strong>Settings</strong> and the approximate usage counter, which is calculated on your Mac.</li>
+        <li><strong>A technical diagnostic log</strong> with events such as app launch and language readiness. It never contains screen text or translations, and its size is capped. Location: <code>~/Library/Logs/LanguageLens.log</code></li>
+      </ul>
+      <p>Deleting the app together with these files removes everything it stored.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>What we don't do</h2>
+      <p>We don't require an account, collect usage data or analytics, show ads, track you across apps or websites, or sell or share any data. We have no server that receives data from the app.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>Children</h2>
+      <p>The app is meant for a general audience and doesn't collect personal information from anyone, including children.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">7</span>Changes to this policy</h2>
+      <p>If what the app does with data changes, we will update this page and the effective date at the top.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">8</span>Contact</h2>
+      <p>For any privacy question, write to us at:</p>
+      <div class="contact"><span class="email" data-email>[email address]</span><button class="copy" type="button" data-copy>Copy</button></div>
+    </section>
+  </article>
+</div>
+
+<script>
+(function () {
+  var ar = document.getElementById('ar'), en = document.getElementById('en');
+  var bAr = document.getElementById('btn-ar'), bEn = document.getElementById('btn-en');
+  var brand = document.getElementById('brandName');
+  function show(lang) {
+    var isEn = lang === 'en';
+    ar.hidden = isEn; en.hidden = !isEn;
+    bAr.setAttribute('aria-pressed', String(!isEn));
+    bEn.setAttribute('aria-pressed', String(isEn));
+    brand.textContent = isEn ? 'Language Lens' : 'عدسة اللغات';
+    document.documentElement.lang = isEn ? 'en' : 'ar'; document.documentElement.dir = isEn ? 'ltr' : 'rtl';
+    document.title = isEn ? 'Language Lens Privacy' : 'خصوصية عدسة اللغات';
+  }
+  bAr.addEventListener('click', function () { show('ar'); });
+  bEn.addEventListener('click', function () { show('en'); });
+  show(location.hash.replace('#', '') === 'en' ? 'en' : 'ar');
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = btn.parentNode.querySelector('[data-email]');
+      var text = el.textContent.trim(), label = btn.textContent;
+      var done = function () { btn.textContent = btn.closest('[lang="en"]') ? 'Copied' : 'تم النسخ'; setTimeout(function () { btn.textContent = label; }, 1600); };
+      var fallback = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
