@@ -114,8 +114,8 @@ a { color: var(--indigo); text-underline-offset: 3px; }
   <!-- ========================= العربية ========================= -->
   <article id="ar" lang="ar">
     <h1>سياسة الخصوصية</h1>
-    <p class="lede">عدسة اللغات تقرأ النص الظاهر تحت العدسة على شاشتك وتكتب ترجمته فوقه. هذه الصفحة توضح ما الذي يبقى على جهازك، وما الذي يخرج منه ومتى.</p>
-    <p class="meta">تاريخ السريان: ٢٠ أكتوبر ٢٠٢٦</p>
+    <p class="lede">عدسة اللغات تقرأ النص الظاهر تحت العدسة على شاشتك وتكتب ترجمته فوقه. توضح هذه الصفحة ما الذي يبقى على جهازك، وما الذي يخرج منه ومتى.</p>
+    <p class="meta">تنطبق على تطبيق عدسة اللغات في الماك (macOS) والآيفون (iOS) والآيباد (iPadOS) وأندرويد (Android). تاريخ السريان: ٢٠ أكتوبر ٢٠٢٦</p>
 
     <div class="map" aria-label="ملخص">
       <div class="cell local"><h3><span class="dot"></span>يبقى على جهازك</h3><p>صور الشاشة، والترجمة العادية، وسجل الترجمات، ومفاتيحك، وإعداداتك.</p></div>
@@ -125,13 +125,14 @@ a { color: var(--indigo); text-underline-offset: 3px; }
 
     <section>
       <h2><span class="n">١</span>ما الذي يراه التطبيق</h2>
-      <p>يحتاج التطبيق إذن <strong>«تسجيل الشاشة»</strong> في macOS ليقرأ الجزء الموجود تحت العدسة فقط. تُقرأ الصورة على جهازك باستخدام أدوات Apple للتعرّف على النص، ثم تُحذف من الذاكرة. لا يحفظ التطبيق صور الشاشة، ولا يرسلها إلى أي جهة، في أي وضع.</p>
-      <p>يمكنك سحب الإذن في أي وقت من «إعدادات النظام» ← «الخصوصية والأمان» ← «تسجيل الشاشة وصوت النظام».</p>
+      <p>ليقرأ النص، يطلب التطبيق إذن النظام الذي يسمح له برؤية ما يظهر على الشاشة، مثل إذن <strong>«تسجيل الشاشة»</strong> في الماك، وإذن التقاط الشاشة أو بثّها في الآيفون والآيباد وأندرويد، أو إذن الكاميرا في النسخ التي تترجم ما تلتقطه الكاميرا. يُستخدم الإذن لقراءة الجزء الموجود تحت العدسة فقط.</p>
+      <p>تُقرأ الصورة على جهازك بأدوات التعرّف على النص المدمجة في النظام، ثم تُحذف من الذاكرة. لا يحفظ التطبيق صور الشاشة أو الكاميرا، ولا يرسلها إلى أي جهة، في أي وضع وعلى أي جهاز.</p>
+      <p>يمكنك سحب الإذن في أي وقت من إعدادات جهازك. في الماك مثلًا: «إعدادات النظام» ← «الخصوصية والأمان» ← «تسجيل الشاشة وصوت النظام».</p>
     </section>
 
     <section>
       <h2><span class="n">٢</span>الترجمة العادية</h2>
-      <p>تتم الترجمة العادية بالكامل على جهازك عبر خدمة الترجمة المدمجة في macOS. يُنزّل النظام حزم اللغات من Apple مرة واحدة، وبعدها تعمل الترجمة دون اتصال بالإنترنت. معاني الكلمات التي تظهر عند النقر على كلمة تأتي من القاموس المدمج في الماك.</p>
+      <p>تتم الترجمة العادية على جهازك باستخدام خدمات الترجمة التي يوفرها نظام التشغيل وحزم اللغات المنزّلة إلى الجهاز. يُنزّل النظام هذه الحزم من مزوّده (Apple أو Google) مرة واحدة، وبعدها تعمل الترجمة دون اتصال بالإنترنت. ولا يُرسَل النص في هذا الوضع إلى أي خادم.</p>
     </section>
 
     <section>
@@ -142,10 +143,10 @@ a { color: var(--indigo); text-underline-offset: 3px; }
         <li><strong>ChatGPT</strong> من OpenAI</li>
         <li><strong>Gemini</strong> من Google</li>
       </ul>
-      <p>عند تشغيلها يُرسَل <strong>النص</strong> الذي قُرئ تحت العدسة، مع تعليمات الترجمة واسم لغة الترجمة، مباشرةً من جهازك إلى الخدمة التي اخترتها. لا تُرسَل صور الشاشة. لا يمر الطلب بأي خادم لنا، ولا نطّلع عليه.</p>
+      <p>عند تشغيلها يُرسَل <strong>النص</strong> الذي قُرئ تحت العدسة، مع تعليمات الترجمة واسم لغة الترجمة، مباشرةً من جهازك إلى الخدمة التي اخترتها. لا تُرسَل الصور. لا يمر الطلب بأي خادم لنا، ولا نطّلع عليه.</p>
       <p>في «الترجمة السريعة» للأفلام، ومع تشغيل الترجمة الاحترافية، تُرسَل أيضًا آخر الجمل المترجمة من الفيلم نفسه حتى تأتي الترجمة متّسقة مع السياق. تُحفظ هذه الجمل في ذاكرة التطبيق فقط، وتُمسح عند إيقاف الترجمة السريعة.</p>
       <p>عند حفظ مفتاح جديد يطلب التطبيق من الخدمة قائمة النماذج المتاحة، للتحقق من المفتاح واختيار نموذج مناسب.</p>
-      <p>تتعامل كل خدمة مع ما يصلها وفق شروطها وسياسة خصوصيتها:
+      <p>تتعامل كل خدمة مع ما يصلها وفق شروطها وسياسة خصوصيتها، ومنها شروط العمر لاستخدامها:
         <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic</a>،
         <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">OpenAI</a>،
         <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Google Gemini API</a>.</p>
@@ -155,31 +156,41 @@ a { color: var(--indigo); text-underline-offset: 3px; }
     <section>
       <h2><span class="n">٤</span>ما يُحفظ على جهازك</h2>
       <ul>
-        <li><strong>مفاتيح الخدمات</strong> في «سلسلة المفاتيح» (Keychain) في macOS، ولا تغادر جهازك إلا مع طلبات الخدمة نفسها.</li>
-        <li><strong>سجل الترجمات</strong>: آخر ١٠٠ ترجمة (النص الأصلي وترجمته). يمكنك إيقافه أو مسحه من التطبيق. جمل الأفلام لا تُحفظ إلا إذا فعّلت ذلك. مكانه: <code>~/Library/Application Support/AdasaLens/history.json</code></li>
+        <li><strong>مفاتيح الخدمات</strong> في المخزن الآمن للنظام: «سلسلة المفاتيح» (Keychain) في أجهزة Apple، و«مخزن المفاتيح» (Keystore) في أندرويد. ولا تغادر جهازك إلا مع طلبات الخدمة نفسها.</li>
+        <li><strong>سجل الترجمات</strong>: آخر ١٠٠ ترجمة (النص الأصلي وترجمته). يمكنك إيقافه أو مسحه من التطبيق. جمل الأفلام لا تُحفظ إلا إذا فعّلت ذلك.</li>
         <li><strong>الإعدادات</strong> وعدّاد الاستهلاك التقريبي، ويُحسب العدّاد على جهازك.</li>
-        <li><strong>سجل تشخيص تقني</strong> فيه أحداث مثل تشغيل التطبيق وجاهزية اللغات، ولا يُكتب فيه أي نص من الشاشة ولا أي ترجمة، وحجمه محدود. مكانه: <code>~/Library/Logs/LanguageLens.log</code></li>
+        <li><strong>سجل تشخيص تقني</strong> فيه أحداث مثل تشغيل التطبيق وجاهزية اللغات، ولا يُكتب فيه أي نص من الشاشة ولا أي ترجمة، وحجمه محدود.</li>
       </ul>
-      <p>حذف التطبيق مع هذه الملفات يزيل كل ما حفظه.</p>
+      <p>حذف التطبيق من الآيفون أو الآيباد أو أندرويد يحذف معه كل ما حفظه. وفي الماك تُحفظ البيانات في <code>~/Library/Application Support/AdasaLens</code> والسجل التقني في <code>~/Library/Logs/LanguageLens.log</code>، ويمكنك حذفهما مع التطبيق.</p>
     </section>
 
     <section>
-      <h2><span class="n">٥</span>ما لا نفعله</h2>
+      <h2><span class="n">٥</span>المتاجر وأنظمة التشغيل</h2>
+      <p>عند تنزيل التطبيق أو شرائه أو تحديثه عبر App Store أو Google Play، تتعامل Apple أو Google مع بياناتك وفق سياساتهما، ولا نتحكم في ذلك. وإن وافقت في إعدادات جهازك على مشاركة بيانات التشخيص مع المطوّرين، قد تصلنا عبر المتجر تقارير أعطال وإحصاءات أداء عامة لا تحدد هويتك.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">٦</span>ما لا نفعله</h2>
       <p>لا نطلب إنشاء حساب، ولا نجمع بيانات استخدام أو تحليلات، ولا نعرض إعلانات، ولا نتتبّعك عبر التطبيقات أو المواقع، ولا نبيع أي بيانات أو نشاركها. ليس لدينا خادم يستقبل بيانات من التطبيق.</p>
     </section>
 
     <section>
-      <h2><span class="n">٦</span>الأطفال</h2>
-      <p>التطبيق موجّه لعامة المستخدمين، ولا يجمع أي معلومات شخصية من أي مستخدم، بمن فيهم الأطفال.</p>
+      <h2><span class="n">٧</span>حقوقك</h2>
+      <p>لأننا لا نجمع بياناتك الشخصية ولا نحفظها على خوادم، فكل ما يخصك موجود على جهازك وتحت تصرفك: تستطيع مسح سجل الترجمات، أو حذف المفاتيح، أو حذف التطبيق في أي وقت. ولأي طلب أو سؤال يتعلق بخصوصيتك راسلنا وسنرد عليك.</p>
     </section>
 
     <section>
-      <h2><span class="n">٧</span>تغييرات السياسة</h2>
-      <p>إذا تغيّر ما يفعله التطبيق بالبيانات، نحدّث هذه الصفحة ونغيّر تاريخ السريان أعلاها.</p>
+      <h2><span class="n">٨</span>الأطفال</h2>
+      <p>التطبيق موجّه لعامة المستخدمين، ولا يجمع أي معلومات شخصية من أي مستخدم، بمن فيهم الأطفال. أما الترجمة الاحترافية فتتطلب حسابًا لدى خدمة خارجية، وتخضع لشروط العمر الخاصة بتلك الخدمة.</p>
     </section>
 
     <section>
-      <h2><span class="n">٨</span>التواصل</h2>
+      <h2><span class="n">٩</span>تغييرات السياسة</h2>
+      <p>إذا تغيّر ما يفعله التطبيق بالبيانات على أي جهاز، نحدّث هذه الصفحة ونغيّر تاريخ السريان أعلاها.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">١٠</span>التواصل</h2>
       <p>لأي سؤال عن الخصوصية راسلنا على:</p>
       <div class="contact"><span class="email" data-email>[البريد الإلكتروني]</span><button class="copy" type="button" data-copy>نسخ</button></div>
     </section>
@@ -188,24 +199,25 @@ a { color: var(--indigo); text-underline-offset: 3px; }
   <!-- ========================= English ========================= -->
   <article id="en" lang="en" hidden>
     <h1>Privacy Policy</h1>
-    <p class="lede">Language Lens reads the text under its lens on your screen and writes the translation on top of it. This page explains what stays on your Mac, and what leaves it and when.</p>
-    <p class="meta">Effective date: October 20, 2026</p>
+    <p class="lede">Language Lens reads the text under its lens on your screen and writes the translation on top of it. This page explains what stays on your device, and what leaves it and when.</p>
+    <p class="meta">Applies to Language Lens on Mac (macOS), iPhone (iOS), iPad (iPadOS) and Android. Effective date: October 20, 2026</p>
 
     <div class="map" aria-label="Summary">
-      <div class="cell local"><h3><span class="dot"></span>Stays on your Mac</h3><p>Screen images, standard translation, translation history, your keys and your settings.</p></div>
+      <div class="cell local"><h3><span class="dot"></span>Stays on your device</h3><p>Screen images, standard translation, translation history, your keys and your settings.</p></div>
       <div class="cell opt"><h3><span class="dot"></span>Leaves only if you turn it on</h3><p>Lens text goes to the service you choose when Pro translation is on with your own key.</p></div>
       <div class="cell never"><h3><span class="dot"></span>Never happens</h3><p>No accounts, ads, analytics or tracking, and no server of ours that receives your data.</p></div>
     </div>
 
     <section>
       <h2><span class="n">1</span>What the app sees</h2>
-      <p>The app needs macOS <strong>Screen Recording</strong> permission to read only the area under the lens. The image is read on your Mac with Apple's text recognition, then dropped from memory. The app never saves screen images and never sends them anywhere, in any mode.</p>
-      <p>You can revoke the permission at any time in System Settings → Privacy &amp; Security → Screen &amp; System Audio Recording.</p>
+      <p>To read text, the app asks for the system permission that lets it see what is on screen, such as <strong>Screen Recording</strong> on Mac, screen capture or broadcast permission on iPhone, iPad and Android, or camera permission in versions that translate what the camera sees. The permission is used only to read the area under the lens.</p>
+      <p>The image is read on your device with the system's built-in text recognition, then dropped from memory. The app never saves screen or camera images and never sends them anywhere, in any mode, on any device.</p>
+      <p>You can revoke the permission at any time in your device settings. On Mac, for example: System Settings → Privacy &amp; Security → Screen &amp; System Audio Recording.</p>
     </section>
 
     <section>
       <h2><span class="n">2</span>Standard translation</h2>
-      <p>Standard translation runs entirely on your Mac using the translation service built into macOS. The system downloads language packs from Apple once, and after that translation works offline. Word definitions shown when you click a word come from the Mac's built-in dictionary.</p>
+      <p>Standard translation runs on your device using the translation services provided by the operating system and language packs downloaded to the device. The system downloads these packs from its provider (Apple or Google) once, and after that translation works offline. In this mode, text is not sent to any server.</p>
     </section>
 
     <section>
@@ -216,10 +228,10 @@ a { color: var(--indigo); text-underline-offset: 3px; }
         <li><strong>ChatGPT</strong> by OpenAI</li>
         <li><strong>Gemini</strong> by Google</li>
       </ul>
-      <p>When it is on, the <strong>text</strong> recognized under the lens, along with translation instructions and the target language, is sent directly from your Mac to the service you chose. Screen images are not sent. Requests do not pass through any server of ours, and we never see them.</p>
+      <p>When it is on, the <strong>text</strong> recognized under the lens, along with translation instructions and the target language, is sent directly from your device to the service you chose. Images are not sent. Requests do not pass through any server of ours, and we never see them.</p>
       <p>In Quick Translation for movies, with Pro translation on, the most recent translated lines of the same movie are also sent so the translation stays consistent with the context. These lines are kept only in the app's memory and are erased when you stop Quick Translation.</p>
       <p>When you save a new key, the app asks the service for its list of available models, to check the key and pick a suitable model.</p>
-      <p>Each service handles what it receives under its own terms and privacy policy:
+      <p>Each service handles what it receives under its own terms and privacy policy, including its age requirements:
         <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic</a>,
         <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">OpenAI</a>,
         <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Google Gemini API</a>.</p>
@@ -227,33 +239,43 @@ a { color: var(--indigo); text-underline-offset: 3px; }
     </section>
 
     <section>
-      <h2><span class="n">4</span>What is stored on your Mac</h2>
+      <h2><span class="n">4</span>What is stored on your device</h2>
       <ul>
-        <li><strong>Service keys</strong> in the macOS Keychain. They leave your Mac only with requests to that service.</li>
-        <li><strong>Translation history</strong>: the last 100 translations (original text and translation). You can turn it off or clear it in the app. Movie lines are saved only if you enable that. Location: <code>~/Library/Application Support/AdasaLens/history.json</code></li>
-        <li><strong>Settings</strong> and the approximate usage counter, which is calculated on your Mac.</li>
-        <li><strong>A technical diagnostic log</strong> with events such as app launch and language readiness. It never contains screen text or translations, and its size is capped. Location: <code>~/Library/Logs/LanguageLens.log</code></li>
+        <li><strong>Service keys</strong> in the system's secure storage: the Keychain on Apple devices and the Keystore on Android. They leave your device only with requests to that service.</li>
+        <li><strong>Translation history</strong>: the last 100 translations (original text and translation). You can turn it off or clear it in the app. Movie lines are saved only if you enable that.</li>
+        <li><strong>Settings</strong> and the approximate usage counter, which is calculated on your device.</li>
+        <li><strong>A technical diagnostic log</strong> with events such as app launch and language readiness. It never contains screen text or translations, and its size is capped.</li>
       </ul>
-      <p>Deleting the app together with these files removes everything it stored.</p>
+      <p>Deleting the app on iPhone, iPad or Android removes everything it stored. On Mac, data is kept in <code>~/Library/Application Support/AdasaLens</code> and the technical log in <code>~/Library/Logs/LanguageLens.log</code>, which you can delete along with the app.</p>
     </section>
 
     <section>
-      <h2><span class="n">5</span>What we don't do</h2>
+      <h2><span class="n">5</span>App stores and operating systems</h2>
+      <p>When you download, buy or update the app through the App Store or Google Play, Apple or Google handle your data under their own policies, which we don't control. If you agreed in your device settings to share diagnostics with developers, we may receive crash reports and general performance statistics through the store that don't identify you.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>What we don't do</h2>
       <p>We don't require an account, collect usage data or analytics, show ads, track you across apps or websites, or sell or share any data. We have no server that receives data from the app.</p>
     </section>
 
     <section>
-      <h2><span class="n">6</span>Children</h2>
-      <p>The app is meant for a general audience and doesn't collect personal information from anyone, including children.</p>
+      <h2><span class="n">7</span>Your rights</h2>
+      <p>Because we don't collect your personal data or keep it on servers, everything about you stays on your device and under your control: you can clear the translation history, remove your keys or delete the app at any time. For any request or question about your privacy, write to us and we will reply.</p>
     </section>
 
     <section>
-      <h2><span class="n">7</span>Changes to this policy</h2>
-      <p>If what the app does with data changes, we will update this page and the effective date at the top.</p>
+      <h2><span class="n">8</span>Children</h2>
+      <p>The app is meant for a general audience and doesn't collect personal information from anyone, including children. Pro translation requires an account with a third-party service and is subject to that service's age requirements.</p>
     </section>
 
     <section>
-      <h2><span class="n">8</span>Contact</h2>
+      <h2><span class="n">9</span>Changes to this policy</h2>
+      <p>If what the app does with data changes on any device, we will update this page and the effective date at the top.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">10</span>Contact</h2>
       <p>For any privacy question, write to us at:</p>
       <div class="contact"><span class="email" data-email>[email address]</span><button class="copy" type="button" data-copy>Copy</button></div>
     </section>
