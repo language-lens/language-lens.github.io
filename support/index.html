@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Language Lens Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one reading column; quick-start steps up top, then questions grouped by topic, contact at the end */
+:root {
+  --bg: #f6f4fa;
+  --surface: #ffffff;
+  --ink: #16131f;
+  --muted: #5d5872;
+  --line: rgba(22, 19, 31, 0.10);
+  --indigo: #5b4be0;
+  --mint: #127f66;
+  --ember: #c9512f;
+  --tint-indigo: rgba(91, 75, 224, 0.08);
+  --tint-mint: rgba(18, 127, 102, 0.09);
+  --tint-ember: rgba(201, 81, 47, 0.09);
+  --display: "Readex Pro", "Geeza Pro", "Segoe UI", system-ui, sans-serif;
+  --body: "Readex Pro", "Geeza Pro", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0b14; --surface: #17141f; --ink: #ece9f6; --muted: #a49fba; --line: rgba(255, 255, 255, 0.09);
+    --indigo: #a99ffb; --mint: #5ee6c8; --ember: #ff8a6b;
+    --tint-indigo: rgba(123, 108, 246, 0.14); --tint-mint: rgba(94, 230, 200, 0.10); --tint-ember: rgba(255, 122, 89, 0.11);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0b14; --surface: #17141f; --ink: #ece9f6; --muted: #a49fba; --line: rgba(255, 255, 255, 0.09);
+  --indigo: #a99ffb; --mint: #5ee6c8; --ember: #ff8a6b;
+  --tint-indigo: rgba(123, 108, 246, 0.14); --tint-mint: rgba(94, 230, 200, 0.10); --tint-ember: rgba(255, 122, 89, 0.11);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-weight: 300; font-size: 16px; line-height: 1.75;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 720px; margin: 0 auto; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 15px; }
+.mark { width: 26px; height: 18px; border-radius: 7px; border: 1.5px solid var(--indigo); position: relative; }
+.mark::after { content: ""; position: absolute; inset: 3px; border-radius: 4px; background: var(--tint-indigo); }
+.langs { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.langs button {
+  font: 500 13px/1 var(--body); color: var(--muted); background: none; border: 0; cursor: pointer;
+  padding: 8px 14px; border-radius: 999px;
+}
+.langs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.langs button:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 6vw, 42px); line-height: 1.2; margin: 18px 0 10px; text-wrap: balance; }
+.lede { color: var(--muted); font-size: 17px; margin: 0 0 6px; max-width: 60ch; }
+.meta { font-size: 13px; color: var(--muted); margin: 0; }
+
+.map { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 30px 0 8px; }
+.cell { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; min-width: 0; }
+.cell h3 { margin: 0 0 6px; font-family: var(--display); font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.cell p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.cell.local .dot { background: var(--mint); box-shadow: 0 0 0 4px var(--tint-mint); }
+.cell.opt .dot { background: var(--ember); box-shadow: 0 0 0 4px var(--tint-ember); }
+.cell.never .dot { background: var(--indigo); box-shadow: 0 0 0 4px var(--tint-indigo); }
+
+section { border-top: 1px solid var(--line); padding-top: 26px; margin-top: 30px; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 20px; margin: 0 0 10px; display: flex; gap: 12px; align-items: baseline; text-wrap: balance; }
+h2 .n { font-family: var(--mono); font-size: 13px; color: var(--indigo); font-weight: 400; }
+p, li { max-width: 65ch; }
+ul { padding-inline-start: 22px; margin: 8px 0; }
+li { margin: 4px 0; }
+strong { font-weight: 500; }
+code { font-family: var(--mono); font-size: 13px; background: var(--tint-indigo); padding: 1px 6px; border-radius: 5px; overflow-wrap: anywhere; direction: ltr; unicode-bidi: isolate; }
+a { color: var(--indigo); text-underline-offset: 3px; }
+.note { background: var(--tint-ember); border-radius: 12px; padding: 12px 16px; margin: 14px 0 4px; font-size: 15px; }
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 10px; }
+.email { font-family: var(--mono); font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; user-select: all; direction: ltr; }
+.copy { font: 500 13px/1 var(--body); background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+.copy:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+details { border-top: 1px solid var(--line); padding-block: 14px; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-family: var(--display); font-weight: 500; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--mono); color: var(--indigo); flex: none; }
+details[open] summary::after { content: "–"; }
+summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 4px; border-radius: 4px; }
+details p, details ul { margin: 10px 0 0; }
+kbd { font-family: var(--mono); font-size: 13px; background: var(--surface); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 1px 7px; direction: ltr; unicode-bidi: isolate; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 26px 0 6px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; min-width: 0; }
+.step .k { font-family: var(--mono); font-size: 12px; color: var(--indigo); }
+.step h3 { margin: 4px 0 6px; font-family: var(--display); font-weight: 600; font-size: 15px; }
+.step p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+@media (max-width: 620px) { .steps { grid-template-columns: 1fr; } }
+[lang="ar"] { direction: rtl; }
+[lang="en"] { direction: ltr; }
+@media (max-width: 620px) { .map { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><span id="brandName">عدسة اللغات</span></div>
+    <div class="langs" role="group" aria-label="Language">
+      <button id="btn-ar" type="button" aria-pressed="true">العربية</button>
+      <button id="btn-en" type="button" aria-pressed="false">English</button>
+    </div>
+  </header>
+
+
+  <article id="ar" lang="ar">
+    <h1>الدعم والمساعدة</h1>
+    <p class="lede">إجابات سريعة عن أكثر ما يسأل عنه مستخدمو عدسة اللغات. وإن لم تجد ما تبحث عنه، راسلنا في آخر الصفحة.</p>
+
+    <div class="steps" aria-label="البداية">
+      <div class="step"><span class="k">١</span><h3>اسمح بتسجيل الشاشة</h3><p>يحتاجه التطبيق ليقرأ النص تحت العدسة فقط. الصور لا تُحفظ ولا تُرسَل.</p></div>
+      <div class="step"><span class="k">٢</span><h3>نزّل لغات الترجمة</h3><p>مرة واحدة من الإعدادات، وبعدها تعمل الترجمة العادية دون إنترنت.</p></div>
+      <div class="step"><span class="k">٣</span><h3>ضع العدسة فوق أي نص</h3><p>اضغط <kbd>⌃⌥L</kbd> لفتحها، واسحبها فوق النص فتُكتب ترجمته مكانه.</p></div>
+    </div>
+
+    <section>
+      <h2><span class="n">١</span>البدء والأذونات</h2>
+      <details><summary>تظهر رسالة «لا تستطيع العدسة رؤية الشاشة»</summary>
+        <p>إذن تسجيل الشاشة غير مفعّل. اضغط «فعّل» بجانب الرسالة، أو افتح «إعدادات النظام» ← «الخصوصية والأمان» ← «تسجيل الشاشة وصوت النظام»، وفعّل «Language Lens»، ثم أعد فتح التطبيق، لأن macOS لا يطبّق الإذن إلا بعد إعادة التشغيل.</p></details>
+      <details><summary>تظهر رسالة «لغات الترجمة غير محمّلة»</summary>
+        <p>اضغط «تحميل» في الواجهة الرئيسية، ونزّل لغة النص الأصلي ولغة الترجمة. يتم التنزيل من Apple مرة واحدة، ثم تعمل الترجمة العادية دون اتصال.</p></details>
+      <details><summary>كيف أعرض دليل البداية مرة أخرى؟</summary>
+        <p>من «الإعدادات العامة» ← «دليل البداية» ← «عرض».</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">٢</span>استخدام العدسة</h2>
+      <details><summary>ما الفرق بين طرق العرض الثلاث؟</summary>
+        <ul><li><strong>فوق النص:</strong> تحلّ الترجمة مكان النص الأصلي.</li><li><strong>تحت العدسة:</strong> تظهر الترجمة في مربع أسفل العدسة.</li><li><strong>مع الأصل:</strong> الترجمة فوق النص والأصل أسفل العدسة، وهي مفيدة لتعلّم اللغة.</li></ul></details>
+      <details><summary>ما اختصارات لوحة المفاتيح؟</summary>
+        <ul><li><kbd>⌃⌥L</kbd> فتح العدسة وإغلاقها.</li><li><kbd>⌃⌥S</kbd> ترجمة منطقة تحددها.</li><li><kbd>⌥</kbd> اضغطه مطوّلًا لترى النص الأصلي، ومع النقر على كلمة يظهر معناها.</li></ul></details>
+      <details><summary>كيف أترجم الأفلام والمسلسلات؟</summary>
+        <p>شغّل «الترجمة السريعة» وضع العدسة فوق مكان الترجمة في الفيلم. تبقى آخر جملة ظاهرة لثوانٍ حتى تظهر الجملة التالية. ويمكنك تشغيل «تظليل العدسة بالكامل» لترجمة أوضح فوق مشاهد مزدحمة.</p></details>
+      <details><summary>هل يمكن فتح أكثر من عدسة؟</summary>
+        <p>نعم، من زر «عدسة جديدة» أعلى الواجهة الرئيسية. لكل عدسة اتجاه ترجمة وطريقة عرض خاصة بها.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">٣</span>الترجمة الاحترافية</h2>
+      <details><summary>ما الترجمة الاحترافية، وهل هي ضرورية؟</summary>
+        <p>ليست ضرورية، فالترجمة العادية تعمل وحدها مجانًا. الاحترافية اختيارية، وتستخدم Claude أو ChatGPT أو Gemini بمفتاحك الخاص لترجمة أدق تفهم السياق والأسلوب.</p></details>
+      <details><summary>من أين أحصل على مفتاح؟</summary>
+        <ul><li><strong>Gemini</strong> (فيه استخدام مجاني محدود): <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li><li><strong>Claude</strong>: <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a></li><li><strong>ChatGPT</strong>: <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a></li></ul>
+        <p>انسخ المفتاح والصقه في قسم «الترجمة الاحترافية» داخل التطبيق، ثم اضغط «حفظ وتفعيل». يُحفظ المفتاح في سلسلة المفاتيح على جهازك فقط.</p></details>
+      <details><summary>كم تكلّف؟</summary>
+        <p>تدفع للخدمة مباشرة حسب استخدامك، ولا نأخذ أي شيء. يعرض التطبيق عدّادًا تقريبيًا للاستهلاك، ويمكنك وضع حدّ شهري للإنفاق تتوقف عنده الترجمة الاحترافية تلقائيًا.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">٤</span>الخصوصية والبيانات</h2>
+      <details><summary>هل يُرسَل شيء من شاشتي؟</summary>
+        <p>صور الشاشة لا تُحفظ ولا تُرسَل أبدًا. في الترجمة الاحترافية فقط يُرسَل نص العدسة مباشرة إلى الخدمة التي اخترتها. التفاصيل في <a href="../privacy/" target="_blank" rel="noopener">سياسة الخصوصية</a>.</p></details>
+      <details><summary>كيف أمسح سجل الترجمات؟</summary>
+        <p>افتح «سجل الترجمات» من زر الساعة أعلى الواجهة الرئيسية، ومنه يمكنك مسح السجل أو إيقاف حفظه.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">٥</span>تواصل معنا</h2>
+      <p>اكتب لنا المشكلة، ومعها إصدار macOS ورقم إصدار التطبيق إن أمكن:</p>
+      <div class="contact"><span class="email" data-email>[البريد الإلكتروني]</span><button class="copy" type="button" data-copy>نسخ</button></div>
+    </section>
+  </article>
+
+  <article id="en" lang="en" hidden>
+    <h1>Support</h1>
+    <p class="lede">Quick answers to the questions Language Lens users ask most. If you can't find what you need, write to us at the bottom of the page.</p>
+
+    <div class="steps" aria-label="Getting started">
+      <div class="step"><span class="k">1</span><h3>Allow Screen Recording</h3><p>The app needs it to read the text under the lens. Images are never saved or sent.</p></div>
+      <div class="step"><span class="k">2</span><h3>Download languages</h3><p>Once, from the settings. After that, standard translation works offline.</p></div>
+      <div class="step"><span class="k">3</span><h3>Put the lens over any text</h3><p>Press <kbd>⌃⌥L</kbd> to open it, then drag it over text and the translation appears in place.</p></div>
+    </div>
+
+    <section>
+      <h2><span class="n">1</span>Getting started and permissions</h2>
+      <details><summary>I see "The lens can’t see the screen"</summary>
+        <p>Screen Recording permission is off. Click "Allow" next to the message, or open System Settings → Privacy &amp; Security → Screen &amp; System Audio Recording, turn on "Language Lens", then reopen the app, since macOS applies the permission only after a restart.</p></details>
+      <details><summary>I see "Translation languages not downloaded"</summary>
+        <p>Click "Download" in the main window and download the original language and the target language. They come from Apple once, then standard translation works offline.</p></details>
+      <details><summary>How do I see the welcome guide again?</summary>
+        <p>Go to General → Getting Started → Show.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>Using the lens</h2>
+      <details><summary>What's the difference between the three display modes?</summary>
+        <ul><li><strong>Over text:</strong> the translation replaces the original.</li><li><strong>Below lens:</strong> the translation appears in a box under the lens.</li><li><strong>With original:</strong> translation over the text and the original under the lens, handy for learning a language.</li></ul></details>
+      <details><summary>What are the keyboard shortcuts?</summary>
+        <ul><li><kbd>⌃⌥L</kbd> open and close the lens.</li><li><kbd>⌃⌥S</kbd> translate an area you select.</li><li><kbd>⌥</kbd> hold to see the original; click a word while holding it to see its meaning.</li></ul></details>
+      <details><summary>How do I translate movies and shows?</summary>
+        <p>Turn on Quick Translation and place the lens over the subtitles. The last line stays visible for a few seconds until the next one appears. Turn on "Shade the whole lens" for clearer text over busy scenes.</p></details>
+      <details><summary>Can I open more than one lens?</summary>
+        <p>Yes, with the "New Lens" button at the top of the main window. Each lens has its own direction and display mode.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>Pro translation</h2>
+      <details><summary>What is Pro translation, and do I need it?</summary>
+        <p>You don't need it. Standard translation works on its own for free. Pro translation is optional and uses Claude, ChatGPT or Gemini with your own key for more accurate translation that understands context and style.</p></details>
+      <details><summary>Where do I get a key?</summary>
+        <ul><li><strong>Gemini</strong> (limited free use): <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com</a></li><li><strong>Claude</strong>: <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a></li><li><strong>ChatGPT</strong>: <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a></li></ul>
+        <p>Copy the key, paste it into the Pro Translation section in the app, then click "Save &amp; Enable". The key is stored in your Mac's Keychain only.</p></details>
+      <details><summary>How much does it cost?</summary>
+        <p>You pay the service directly for what you use; we take nothing. The app shows an approximate usage counter, and you can set a monthly spending limit that pauses Pro translation automatically.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>Privacy and data</h2>
+      <details><summary>Is anything from my screen sent anywhere?</summary>
+        <p>Screen images are never saved or sent. Only with Pro translation is the lens text sent, directly to the service you chose. Details are in the <a href="../privacy/#en" target="_blank" rel="noopener">privacy policy</a>.</p></details>
+      <details><summary>How do I clear my translation history?</summary>
+        <p>Open Translation history from the clock button at the top of the main window. From there you can clear it or stop saving.</p></details>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>Contact us</h2>
+      <p>Describe the problem, and include your macOS version and the app version if you can:</p>
+      <div class="contact"><span class="email" data-email>[email address]</span><button class="copy" type="button" data-copy>Copy</button></div>
+    </section>
+  </article>
+</div>
+
+<script>
+(function () {
+  var ar = document.getElementById('ar'), en = document.getElementById('en');
+  var bAr = document.getElementById('btn-ar'), bEn = document.getElementById('btn-en');
+  var brand = document.getElementById('brandName');
+  function show(lang) {
+    var isEn = lang === 'en';
+    ar.hidden = isEn; en.hidden = !isEn;
+    bAr.setAttribute('aria-pressed', String(!isEn));
+    bEn.setAttribute('aria-pressed', String(isEn));
+    brand.textContent = isEn ? 'Language Lens' : 'عدسة اللغات';
+    document.documentElement.lang = isEn ? 'en' : 'ar'; document.documentElement.dir = isEn ? 'ltr' : 'rtl';
+    document.title = isEn ? 'Language Lens Support' : 'دعم عدسة اللغات';
+  }
+  bAr.addEventListener('click', function () { show('ar'); });
+  bEn.addEventListener('click', function () { show('en'); });
+  show(location.hash.replace('#', '') === 'en' ? 'en' : 'ar');
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = btn.parentNode.querySelector('[data-email]');
+      var text = el.textContent.trim(), label = btn.textContent;
+      var done = function () { btn.textContent = btn.closest('[lang="en"]') ? 'Copied' : 'تم النسخ'; setTimeout(function () { btn.textContent = label; }, 1600); };
+      var fallback = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
